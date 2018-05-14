@@ -33,14 +33,16 @@ In order to use it, one should use an rpm-based distro, like Fedora :), and shou
 -   dpkg-dev
 -   debootstrap
 -   PyYAML
+-   perl-Digest-MD5
+-   perl-Digest-SHA
 
 Usually one can install those packages by just issuing:
 
-    sudo dnf install gpg git createrepo rpm-build make wget rpmdevtools python-sh dialog rpm-sign dpkg-dev debootstrap PyYAML
+    sudo dnf install gpg git createrepo rpm-build make wget rpmdevtools python-sh dialog rpm-sign dpkg-dev debootstrap PyYAML perl-Digest-MD5 perl-Digest-SHA
 
 The build system creates build environments in chroots and so no other packages are needed on the host. All files created by the build system are contained within the qubes-builder directory. The full build requires some 25GB of free space, so keep that in mind when deciding where to place this directory.
 
-The build system is configured via builder.conf file -- one should copy the provided default builder.conf, and modify it as needed, e.g.:
+The build system is configured via builder.conf file -- one can create this by running the setup script, or copy the provided default builder.conf, and modify it as needed, e.g.:
 
     cp example-configs/qubes-os-master.conf builder.conf 
     # edit the builder.conf file and set the following variables: 
