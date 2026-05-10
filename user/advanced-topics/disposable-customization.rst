@@ -10,7 +10,7 @@ Introduction
 ------------
 
 
-A :doc:`disposable </user/how-to-guides/how-to-use-disposables>` can be based on any :term:`disposable template`. You can have as many disposables or disposable templates as you'd like. This page contains information on advanced methods to use disposables, how to customize them, how to deal with multiple disposable templates and how to delete them.
+A :doc:`disposable </user/how-to-guides/how-to-use-disposables>` can be based on any :term:`disposable template`. You can have as many disposables or disposable templates as you like. This page contains information on advanced methods to use disposables, how to customize them, how to deal with multiple disposable templates, and how to delete them.
 
 
 Security
@@ -23,19 +23,19 @@ Disposables and local forensics
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-At this time, disposables should not be relied upon to circumvent local forensics, as they `do not run entirely in RAM <https://groups.google.com/d/topic/qubes-devel/QwL5PjqPs-4/discussion>`__. When it is essential to avoid leaving any trace, consider using `Tails <https://tails.net>`__ on bare-metal, as using Tails on a `qube cannot be relied on for amnesiac purposes <https://tails.net/doc/advanced_topics/virtualization/index.en.html#index2h1>`__.
+At this time, disposables should not be relied upon to circumvent local forensics, as they `do not run entirely in RAM <https://groups.google.com/d/topic/qubes-devel/QwL5PjqPs-4/discussion>`__. When it is essential to avoid leaving any trace, consider using `Tails <https://tails.net>`__ on bare-metal, as using Tails in a `qube cannot be relied on for amnesiac purposes <https://tails.net/doc/advanced_topics/virtualization/index.en.html#index2h1>`__.
 
 Disposables settings inheritance
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-Similarly to how app qubes are based on their underlying :term:`template`, disposables are based on their underlying :term:`disposable template`.
+Just as an :term:`app qube` is based on its underlying :term:`template`, a disposable is based on its underlying :term:`disposable template`.
 
-By default, a disposable will inherit the network and firewall settings of the disposable template on which it is based. Therefore, launching a disposable from an app qube will result in it using the network/firewall settings of the disposable template on which it is based. For example, if an app qube uses ``sys-net`` as its net qube, but the default system disposable uses ``sys-whonix``, any disposable launched from this app qube will have ``sys-whonix`` as its net qube.
+By default, a disposable will inherit the network and firewall settings of the disposable template on which it is based. For example, if an app qube uses ``sys-net`` as its net qube, but the default system disposable uses ``sys-whonix``, any disposable launched from this app qube will have ``sys-whonix`` as its net qube.
 
-.. warning:: Changing the net qube setting for the system's default disposable template *does* affect the net qube of its new disposables. Different disposable templates with individual net qube settings can be added to the app menu.
+.. warning:: Changing the net qube setting for the system's default disposable template *does* affect the net qube of new disposables. Different disposable templates with individual net qube settings can be added to the app menu.
 
-You can set an app qube that has also been configured as a disposable template to use itself, so disposables launched from within the app qube/disposable template would inherit the same settings. This is recommended to avoid sharing too much information about your system, as inhering the same configuration means it helps prevent network leaks. For example, ``anon-whonix`` has its ``default_dispvm`` a Whonix-Workstation qube such as :samp:`whonix-workstation-{12}-dvm` (where :samp:`{12}` is the template's release number), instead of the system default. This ensures that all traffic goes through the intended network chain.
+You can set an app qube that has been configured as a disposable template to use itself, so disposables launched from within the app qube/disposable template would inherit the same settings. This is recommended to avoid sharing too much information about your system, as inhering the same configuration means it helps prevent network leaks. For example, ``anon-whonix`` has its ``default_dispvm`` a Whonix-Workstation qube such as :samp:`whonix-workstation-{12}-dvm` (where :samp:`{12}` is the template's release number), instead of the system default. This ensures that all traffic goes through the intended network chain.
 
 .. warning:: The opposite is also true. If you have changed ``anon-whonix``'s ``default_dispvm`` to use the system default, and the system default disposable template uses ``sys-net``, launching a disposable from inside ``anon-whonix`` will result in the disposable using ``sys-net``.
 
@@ -82,7 +82,7 @@ The line above means:
 
 - ACTION: Allow action to proceed.
 
-In other words, the ``email`` qube will be allowed to create a new disposable based on ``net-dvm`` and open a URL inside of that disposable. For more information about Qrexec usage, checkout :ref:`the policy directives <developer/services/qrexec:specifying vms: tags, types, targets, etc.>`.
+In other words, the ``email`` qube will be allowed to create a new disposable based on ``net-dvm`` and open a URL inside of that disposable. For more information about qrexec usage, checkout :ref:`the policy directives <developer/services/qrexec:specifying vms: tags, types, targets, etc.>`.
 
 To check if everything is working as expected, from the ``email`` qube with :program:`qvm-open-in-vm`:
 
