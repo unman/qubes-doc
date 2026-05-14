@@ -3,7 +3,7 @@ Template manager
 ================
 
 
-This document discusses the designs and technical details of ``qvm-template``, a template manager application. The goal of the project is to design a new mechanism for template distribution and a unified tool for template management.
+This document discusses the designs and technical details of ``qvm-template``, a template manager application which provides a mechanism for template distribution and a unified tool for template management.
 
 Motivation
 ----------
@@ -11,7 +11,7 @@ Motivation
 
 This project was originally proposed in the 2020 Google Summer of Code program.
 
-Previously, templates were distributed by RPM packages and managed by ``yum``/``dnf``. However, tracking inherently dynamic VM images with a package manager suited for static files creates some challenges. For example, users may accidentally update the images, overriding local changes (`#996 <https://github.com/QubesOS/qubes-issues/issues/996>`__, `#1647 <https://github.com/QubesOS/qubes-issues/issues/1647>`__). (Or in the case of `#2061 <https://github.com/QubesOS/qubes-issues/issues/2061>`__, want to specifically override the changes.) Other operations that work well on normal VMs are also somewhat inconsistent on RPM-managed templates. This includes actions such as renaming (`#839 <https://github.com/QubesOS/qubes-issues/issues/839>`__), removal (`#5509 <https://web.archive.org/web/20210526123932/https://github.com/QubesOS/qubes-issues/issues/5509>`__) and backup/restore (`#1385 <https://github.com/QubesOS/qubes-issues/issues/1385>`__, `#1453 <https://github.com/QubesOS/qubes-issues/issues/1453>`__, `discussion thread 1 <https://groups.google.com/forum/#!topic/qubes-devel/rwc2_miCNNE/discussion>`__, `discussion thread 2 <https://groups.google.com/forum/#!topic/qubes-users/uQEUpv4THsY/discussion>`__). In turn, this creates inconveniences and confusion for users (`#1403 <https://github.com/QubesOS/qubes-issues/issues/1403>`__, `#4518 <https://github.com/QubesOS/qubes-issues/issues/4518>`__).
+Previously, templates were distributed by RPM packages and managed by ``yum``/``dnf``. However, tracking inherently dynamic qube images with a package manager suited for static files creates some challenges. For example, users may accidentally update the images, overriding local changes (`#996 <https://github.com/QubesOS/qubes-issues/issues/996>`__, `#1647 <https://github.com/QubesOS/qubes-issues/issues/1647>`__). (Or in the case of `#2061 <https://github.com/QubesOS/qubes-issues/issues/2061>`__, want to specifically override the changes.) Other operations that work well on normal qubes are also somewhat inconsistent on RPM-managed templates. This includes actions such as renaming (`#839 <https://github.com/QubesOS/qubes-issues/issues/839>`__), removal (`#5509 <https://web.archive.org/web/20210526123932/https://github.com/QubesOS/qubes-issues/issues/5509>`__) and backup/restore (`#1385 <https://github.com/QubesOS/qubes-issues/issues/1385>`__, `#1453 <https://github.com/QubesOS/qubes-issues/issues/1453>`__, `discussion thread 1 <https://groups.google.com/forum/#!topic/qubes-devel/rwc2_miCNNE/discussion>`__, `discussion thread 2 <https://groups.google.com/forum/#!topic/qubes-users/uQEUpv4THsY/discussion>`__). In turn, this creates inconveniences and confusion for users (`#1403 <https://github.com/QubesOS/qubes-issues/issues/1403>`__, `#4518 <https://github.com/QubesOS/qubes-issues/issues/4518>`__).
 
 Also, the usage of RPM packages meant that installing a template results in arbitrary code execution, which is not ideal.
 
@@ -41,13 +41,13 @@ Features
 
 - Remove templates
 
-  - Optionally, VMs based on the template to be removed can be either removed or “disassociated” – namely, have their templates changed to a “dummy” one.
+  - Optionally, qubes based on the template to be removed can be either removed or “disassociated” – namely, have their templates changed to a “dummy” one.
 
 
 
 - Show available repositories
 
-- Works in both dom0 and management VMs by utilizing the Admin API
+- Works in both dom0 and management qubes by utilizing the Admin API
 
 - Works well with existing tools
 
@@ -137,13 +137,13 @@ The file structure should be quite similar to previous template RPMs. Namely, th
 
 - ``var/lib/qubes/vm-templates/<TEMPLATE_NAME>/vm-whitelisted-appmenus.list``
 
-  - Contains default app menu entries of VMs based on the template.
+  - Contains default app menu entries of qubes based on the template.
 
 
 
 - ``var/lib/qubes/vm-templates/<TEMPLATE_NAME>/netvm-whitelisted-appmenus.list``
 
-  - Contains default app menu entries of NetVMs based on the template.
+  - Contains default app menu entries of net qubes based on the template.
 
   - These three files are the same as the current format.
 
@@ -219,7 +219,7 @@ Repository management
 ---------------------
 
 
-For UpdateVMs to access the repository configuration, the package `qubes-repo-templates <https://github.com/WillyPillow/qubes-repo-templates>`__ is created with the following contents:
+For an update proxy to access the repository configuration, the package `qubes-repo-templates <https://github.com/WillyPillow/qubes-repo-templates>`__ is created with the following contents:
 
 - ``/etc/qubes/repo-templates/*.repo``: repository configuration
 
@@ -233,7 +233,7 @@ Qrexec protocol
 ---------------
 
 
-Dom0 and management VMs without network access also need to interact with template repositories. The following qrexec calls that list and download templates are thus proposed.
+Dom0 and management qubes without network access also need to interact with template repositories. The following qrexec calls that list and download templates are thus proposed.
 
 - ``qubes.TemplateSearch``: wraps ``dnf repoquery``
 
@@ -303,13 +303,13 @@ Interactions with existing tools
 
 The existing ``qvm-remove`` tool should behave identically to ``qvm-template remove`` – albeit without fancy features like disassociation. This is unlike the previous situation where ``qvm-remove`` cannot remove RPM-installed templates.
 
-Notably, the metadata needs no special handling as it is stored in VM features and thus automatically consistent.
+Notably, the metadata needs no special handling as it is stored in qube features and thus automatically consistent.
 
 Renaming and cloning
 ^^^^^^^^^^^^^^^^^^^^
 
 
-A template is treated as non-manager-installed once renamed or cloned. However, relevant metadata in the VM features is still retained for future extension and to serve as a hint for the user.
+A template is treated as non-manager-installed once renamed or cloned. However, relevant metadata in the qube features is still retained for future extension and to serve as a hint for the user.
 
 Further reading
 ---------------
