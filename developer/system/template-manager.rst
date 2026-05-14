@@ -219,7 +219,7 @@ Repository management
 ---------------------
 
 
-For an update proxy to access the repository configuration, the package `qubes-repo-templates <https://github.com/WillyPillow/qubes-repo-templates>`__ is created with the following contents:
+For an update qube to access the repository configuration, the package `qubes-repo-templates <https://github.com/WillyPillow/qubes-repo-templates>`__ is created with the following contents:
 
 - ``/etc/qubes/repo-templates/*.repo``: repository configuration
 

@@ -54,12 +54,12 @@ Installing software from other sources
 
 Some software is not available from the default repositories and must be downloaded and installed from another source. Depending on the installation method, you may either use the updates proxy or direct networking.
 
-Using the updates proxy
-^^^^^^^^^^^^^^^^^^^^^^^
+Using an update qube
+^^^^^^^^^^^^^^^^^^^^
 
-If you are still using the distribution package manager, updates will likely still work over the updates proxy without needing to give the TemplateVM direct network access.
+If you are using the distribution package manager, you do not need to give the template direct network access: you can an update qube. In Qubes Global Settings you can specify which update qube should be used by default, or set an update qube for specific templates to use.
 
-If you are using another installation method fetching remote resources, you might still be able to use the updates proxy by making the tools aware of the proxy. For many tools, it is enough to export the following environment variables in your shell session before proceeding:
+If you are using another installation method fetching remote resources, you might still be able to use the update qube by making the tools aware of it. For many tools, it is enough to export environment variables in your shell session before proceeding:
 
 .. code:: console
 
@@ -145,7 +145,7 @@ If you wish to install updates that are still in :doc:`testing </user/downloadin
 Fedora
 ^^^^^^
 
-There are three Qubes VM testing repositories (where ``*`` denotes the Release):
+There are three Qubes testing repositories (where ``*`` denotes the Release):
 
 - ``qubes-vm-*-current-testing`` – testing packages that will eventually land in the stable (``current``) repository
 
@@ -166,7 +166,7 @@ To enable or disable any of these repos permanently, change the corresponding ``
 Debian
 ^^^^^^
 
-Debian also has three Qubes VM testing repositories (where ``*`` denotes the Debian codename, i.e. "|debian-codename|"):
+Debian also has three Qubes testing repositories (where ``*`` denotes the Debian codename, i.e. "|debian-codename|"):
 
 - ``*-testing`` – testing packages that will eventually land in the stable (``current``) repository
 
@@ -251,9 +251,9 @@ This is like the simple revert, except:
 Updates proxy
 ^^^^^^^^^^^^^
 
-Updates proxy is a service which allows access from package managers configured to use the proxy by default, but can be used by any other program that accepts proxy arguments. The purpose of the proxy, instead of direct network access, is meant to mitigate user errors of using applications such as the browser in the template. Not necessarily what part of the network they can access, but only to applications trusted by the user, configured to use the proxy. The http proxy (tinyproxy) does not filter traffic because it is hard to list all the repository mirrors and keep that list up to date). it also does not cache anything.
+The Updates proxy is a service which allows access from package managers which have been configured to use the proxy, but can also be used by any other program that allows use of a proxy. The purpose of the proxy service is to allow templates to update without using direct network access: it is meant to mitigate user errors like using applications such as the browser in the template. Only applications trusted by the user, which have been configured to use the proxy, will be able to access a nework. The http proxy (tinyproxy) does not filter traffic because it is hard to list all the repository mirrors and keep that list up to date. Nor does it cache data.
 
-The proxy is running in selected VMs (by default all the NetVMs (1)) and intercepts traffic directed to 127.0.0.1:8082. Thanks to such configuration all the VMs can use the same proxy address. If the VM is configured to have access to the updates proxy (2), the startup scripts will automatically configure dnf/apt to really use the proxy (3). Also access to updates proxy is independent of any other firewall settings (VM will have access to updates proxy, even if policy is set to block all the traffic).
+The proxy is running in selected qubes (by default all the net qubes (1)):it intercepts traffic directed to 127.0.0.1:8082. Thanks to such configuration all the VMs can use the same proxy address. If the VM is configured to have access to the updates proxy (2), the startup scripts will automatically configure dnf/apt to really use the proxy (3). Also access to updates proxy is independent of any other firewall settings (VM will have access to updates proxy, even if policy is set to block all the traffic).
 
 There are two services (``qvm-service``, :doc:`service framework </user/advanced-topics/qubes-service>`):
 
