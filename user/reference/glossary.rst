@@ -142,6 +142,10 @@ Qube types and properties
 
       Any :term:`app qube` with the primary purpose of providing services to other qubes. ``sys-net`` and ``sys-firewall`` are examples of service qubes.
 
+   update qube
+
+      Any :term:`qube` which has the updates proxy service installed. Every qube which provides networking, like ``sys-net`` and ``sys-firewall``, can be used as an update qube.
+
    internal qube
       A qube which has the ``internal`` feature set. Those qubes are hidden from GUI tools such as user menu and have many GUI features disabled. They are used for the :term:`management qube` and preloading disposable qubes. In most cases, internal qubes should not be manipulated by the user directly.
 
