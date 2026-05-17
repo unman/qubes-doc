@@ -252,6 +252,7 @@ New/Improved experimental features
     (`#9475 <https://github.com/QubesOS/qubes-issues/issues/9475>`__).
 
 - Better support for GUIVM.
+.. note:: The GuiVM is now called the interface qube.
 
   - GUI/Admin domain splitting
     (`#833 <https://github.com/QubesOS/qubes-issues/issues/833>`__).

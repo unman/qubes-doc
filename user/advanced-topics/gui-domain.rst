@@ -1,20 +1,20 @@
 ==========
-GUI domain
+Interface qube
 ==========
 
 .. warning::
 
       This page is intended for advanced users.
 
-On this page, we describe how to set up a `GUI domain <https://www.qubes-os.org/news/2020/03/18/gui-domain/>`__. In all the cases, the base underlying TemplateVM used is ``Fedora`` with ``XFCE`` flavor to match current desktop choice in ``dom0``. That can be adapted very easily for other desktops and templates. By default, the configured GUI domain is a management qube with global admin permissions ``rwx`` but can be adjusted to ``ro`` (see `Introducing the Qubes Admin API <https://www.qubes-os.org/news/2017/06/27/qubes-admin-api/>`__) in pillar data of the corresponding GUI domain to setup. For example, pillar data for ``sys-gui`` located at ``/srv/pillar/base/qvm/sys-gui.sls``. Please note that each GUI domain has no ``NetVM``.
+On this page, we describe how to set up an `interface qube <https://www.qubes-os.org/news/2020/03/18/gui-domain/>`__. In all the cases, the base underlying TemplateVM used is ``Fedora`` with ``XFCE`` flavor to match current desktop choice in ``dom0``. That can be adapted very easily for other desktops and templates. By default, the configured interface qube is a management qube with global admin permissions ``rwx`` but can be adjusted to ``ro`` (see `Introducing the Qubes Admin API <https://www.qubes-os.org/news/2017/06/27/qubes-admin-api/>`__) in pillar data of the corresponding interface qube to setup. For example, pillar data for ``sys-gui`` located at ``/srv/pillar/base/qvm/sys-gui.sls``. Please note that each interface qube has no ``NetVM``.
 
    **Note:** The setup is done using ``SaltStack`` formulas with the ``qubesctl`` tool. When executing it, apply step can take time because it needs to download latest Fedora XFCE TemplateVM and install desktop dependencies.
 
-Hybrid GUI domain (``sys-gui``)
+Hybrid interface qube (``sys-gui``)
 -------------------------------
 
 
-Here, we describe how to setup ``sys-gui`` that we call *hybrid mode* or referenced as a *compromise solution* in `GUI domain <https://www.qubes-os.org/news/2020/03/18/gui-domain/>`__.
+Here, we describe how to setup ``sys-gui`` that we call *hybrid mode* or referenced as a *compromise solution* in `the post introducing interface qubes <https://www.qubes-os.org/news/2020/03/18/gui-domain/>`__.
 
 |sys-gui|
 
@@ -53,11 +53,11 @@ To use sys-gui, shutdown all your running qubes , and log out. Before you log ba
 
    **Note:** In order to go back to ``dom0`` desktop, you need to logout and then change the  ``lightdm`` session to **Session Xfce**.
 
-GPU GUI domain (``sys-gui-gpu``)
+GPU interface qube (``sys-gui-gpu``)
 --------------------------------
 
 
-Here, we describe how to setup ``sys-gui-gpu`` which is a GUI domain with *GPU passthrough* in `GUI domain <https://www.qubes-os.org/news/2020/03/18/gui-domain/>`__.
+Here, we describe how to setup ``sys-gui-gpu`` which is an interface qube with *GPU passthrough* in `GUI domain <https://www.qubes-os.org/news/2020/03/18/gui-domain/>`__.
 
    **Note:** the purpose of ``sys-gui-gpu`` is to improve Qubes OS security by detaching the GPU from dom0, this is not intended to improve GPU related performance within qubes, and this will not improve performance.
 
@@ -102,11 +102,11 @@ At this point, you need to reboot your Qubes OS machine in order to boot into ``
 
 Once, ``lightdm`` is started, you can log as ``user`` where ``user`` refers to the first ``dom0`` user in ``qubes`` group and with corresponding ``dom0`` password. A better approach for handling password is currently discussed in `QubesOS/qubes-issues#6740 <https://github.com/QubesOS/qubes-issues/issues/6740>`__.
 
-VNC GUI domain (``sys-gui-vnc``)
+VNC interface qube (``sys-gui-vnc``)
 --------------------------------
 
 
-Here, we describe how to setup ``sys-gui-vnc`` that we call a *remote* GUI domain or referenced as *with a virtual server* in `GUI domain <https://www.qubes-os.org/news/2020/03/18/gui-domain/>`__.
+Here, we describe how to setup ``sys-gui-vnc`` that we call a *remote* interface qube or referenced as *with a virtual server* in `GUI domain <https://www.qubes-os.org/news/2020/03/18/gui-domain/>`__.
 
 |sys-gui-vnc|
 
@@ -149,8 +149,8 @@ Major Known issues
 ------------------
 
 
-Application menu lacks qubes entries in a fresh GUI domain
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Application menu lacks qubes entries in a fresh interface qube
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 See `QubesOS/qubes-issues#5804 <https://github.com/QubesOS/qubes-issues/issues/5804>`__
@@ -169,10 +169,10 @@ Power saving/screensaver issues
 See `QubesOS/qubes-issues#9033 <https://github.com/QubesOS/qubes-issues/issues/9033>`__, `QubesOS/qubes-issues#9384 <https://github.com/QubesOS/qubes-issues/issues/9384>`__
 
 
-Other GUI domain issues
------------------------
+Other interface qube issues
+---------------------------
 
-There are a number of other issues affecting use of the GUI domain, and some proposed enhancements. Please review these at ``QubesOS/qubes-issues`` using the label `C: gui-domain <https://github.com/QubesOS/qubes-issues/issues?q=is%3Aopen%20is%3Aissue%20label%3A%22C%3A%20gui-domain%22>`__ .
+There are a number of other issues affecting use of the interface qube, and some proposed enhancements. Please review these at ``QubesOS/qubes-issues`` using the label `C: gui-domain <https://github.com/QubesOS/qubes-issues/issues?q=is%3Aopen%20is%3Aissue%20label%3A%22C%3A%20gui-domain%22>`__ .
 
 
 Reverting sys-gui
@@ -190,14 +190,14 @@ Set ``default_guivm`` as ``dom0``:
       $ qubes-prefs default_guivm dom0
 
 
-and for every selected qubes not using default value for GUI domain property, for example with a qube ``personal``:
+and for every selected qubes not using default value for interface qube property, for example with a qube ``personal``:
 
 .. code:: console
 
       $ qvm-prefs personal guivm dom0
 
 
-You are now able to delete the GUI domain, for example ``sys-gui-gpu``:
+You are now able to delete the interface qube, for example ``sys-gui-gpu``:
 
 .. code:: console
 

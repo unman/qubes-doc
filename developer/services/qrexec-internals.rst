@@ -334,7 +334,7 @@ A standalone version is called ``qrexec-policy-exec`` and is available as a fall
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 
-This is a service running in the GuiVM. It is called by ``qrexec-policy-daemon`` in order to display prompts and notifications to the user.
+This is a service running in the interface qube. It is called by ``qrexec-policy-daemon`` in order to display prompts and notifications to the user.
 
 It is a :doc:`socket-based Qubes RPC service </developer/services/qrexec-socket-services>`. Requests are in JSON format, and response is simple ASCII.
 

@@ -43,7 +43,7 @@ Keys exposed by dom0 to VM
 
 - ``/qubes-keyboard`` (deprecated in R4.1) - keyboard layout based on dom0's layout. Its syntax is suitable for the ``xkbcomp`` command (after expanding escape sequences like ``\n`` or ``\t``). This is meant only as some default value, the VM can ignore this option and choose its own keyboard layout (this is what the keyboard setting in Qubes Manager does). This entry is created as part of gui-daemon initialization (it's not available when gui-daemon is disabled, or has not started yet).
 
-- ``/keyboard-layout`` - keyboard layout based on the GuiVM's layout. The key's syntax can be ``layout+variant+options``, ``layout+variant``, ``layout++options`` or simply ``layout``. Example, ``fr+oss``, ``pl++compose:caps`` or ``fr``. This is meant only as some default value, the VM can ignore this option and choose its own keyboard layout (this is what the keyboard setting in Qubes Manager does).
+- ``/keyboard-layout`` - keyboard layout based on the interface qube's layout. The key's syntax can be ``layout+variant+options``, ``layout+variant``, ``layout++options`` or simply ``layout``. Example, ``fr+oss``, ``pl++compose:caps`` or ``fr``. This is meant only as some default value, the VM can ignore this option and choose its own keyboard layout (this is what the keyboard setting in Qubes Manager does).
 
 - ``/qubes-debug-mode`` - flag indicating whether the VM has debug mode enabled (qvm-prefs setting). One of ``1``, ``0``
 
@@ -69,7 +69,7 @@ Keys exposed by dom0 to VM
 
 - ``/qubes-netvm-secondary-dns`` - same as ``qubes-secondary-dns`` in connected VMs (only when VM serves as network backend - ProxyVM and NetVM); traffic sent to this IP on port 53 should be redirected to the secondary DNS server
 
-- ``/guivm-windows-prefix`` - title prefix for any window not originating from another qube. This means windows of applications running in the GuiVM itself
+- ``/guivm-windows-prefix`` - title prefix for any window not originating from another qube. This means windows of applications running in the interface qube itself
 
 
 
@@ -267,7 +267,7 @@ Other qrexec services installed by default:
 
 
 
-Services called in the GuiVM:
+Services called in the interface qube:
 
 - ``policy.Ask``, ``policy.Notify`` - confirmation prompts and notifications for Qubes RPC calls, see :ref:`qrexec-policy implementation <developer/services/qrexec-internals:\`\`qrexec-policy\`\` implementation>` for a detailed description.
 
